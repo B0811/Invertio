@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm1y06bl10337"]
+[gd_scene load_steps=6 format=3 uid="uid://bm1y06bl10337"]
 
 [ext_resource type="Texture2D" uid="uid://bm6m73v5oiyav" path="res://whitebackground.png" id="1_6fu6w"]
+[ext_resource type="PackedScene" uid="uid://b5rcvg6qdsfl3" path="res://ballchar.tscn" id="2_q3a8l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_no60m"]
 texture = ExtResource("1_6fu6w")
@@ -8,6 +9,9 @@ texture = ExtResource("1_6fu6w")
 
 [sub_resource type="TileSet" id="TileSet_cio2f"]
 sources/0 = SubResource("TileSetAtlasSource_no60m")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2viq5"]
+size = Vector2(1, 1152)
 
 [node name="mainscreen" type="Node2D"]
 
@@ -18,3 +22,19 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 131072, 0, 0, 65537, 0, 0, 1, 0, 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
+
+[node name="Sprite2D" parent="." instance=ExtResource("2_q3a8l")]
+position = Vector2(212, 900)
+
+[node name="wall" type="Area2D" parent="." groups=["wall"]]
+
+[node name="wallshape" type="CollisionShape2D" parent="wall"]
+position = Vector2(0.5, 576)
+shape = SubResource("RectangleShape2D_2viq5")
+
+[node name="wall2" type="Area2D" parent="." groups=["wall"]]
+position = Vector2(647, 0)
+
+[node name="wallshape" type="CollisionShape2D" parent="wall2"]
+position = Vector2(0.5, 576)
+shape = SubResource("RectangleShape2D_2viq5")
