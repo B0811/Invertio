@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=648
-window/size/viewport_height=1152
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="viewport"
 window/handheld/orientation=1
 
 [editor]
@@ -37,6 +38,10 @@ touch={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+2d/default_gravity=1200.0
 
 [rendering]
 

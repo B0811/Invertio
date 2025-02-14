@@ -1,7 +1,36 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5rcvg6qdsfl3"]
 
-[ext_resource type="Script" path="res://ballcharacter.gd" id="1_m2jld"]
 [ext_resource type="Texture2D" uid="uid://d0n8wy7aw0u7u" path="res://ballman.png" id="1_n235j"]
+
+[sub_resource type="GDScript" id="GDScript_y53pe"]
+script/source = "extends CharacterBody2D
+
+const SPEED = 500.0
+const JUMP_VELOCITY = -400.0
+const GRAVITY_SCALE = 1.5
+const MAX_SPEED = 750.0
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
+var gravity_direction = Vector2(1, 0)  # Initial gravity direction (to the right)
+
+func _physics_process(delta):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += gravity_direction * gravity * delta
+
+	# Apply the maximum speed limit.
+	if velocity.length() > MAX_SPEED:
+		velocity = velocity.normalized() * MAX_SPEED
+
+	
+	move_and_slide()
+
+func _input(event):
+	if event is InputEventScreenTouch and event.is_pressed():
+		# Toggle gravity direction between right and left
+		gravity_direction = -gravity_direction * GRAVITY_SCALE
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qnujt"]
 
@@ -9,7 +38,7 @@
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(2, 2)
-script = ExtResource("1_m2jld")
+script = SubResource("GDScript_y53pe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_n235j")
