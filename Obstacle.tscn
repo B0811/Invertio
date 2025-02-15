@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://dv88pcpscquly"]
+
+[sub_resource type="GDScript" id="GDScript_7pnot"]
+script/source = "extends Node2D
+
+
+
+func _on_animation_player_animation_finished(anim_name):
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_udoyy"]
+size = Vector2(7, 284)
+
+[sub_resource type="Animation" id="Animation_vshvm"]
+resource_name = "scrolldown"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-17, -3936), Vector2(-17, 2200)]
+}
+
+[sub_resource type="Animation" id="Animation_0lxef"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-17, -2965)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fs5rh"]
+_data = {
+"RESET": SubResource("Animation_0lxef"),
+"scrolldown": SubResource("Animation_vshvm")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m8oq8"]
+size = Vector2(25.5, 1435)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mvx13"]
+size = Vector2(23, 2204)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(-17, -2965)
+script = SubResource("GDScript_7pnot")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 503.0
+offset_top = -227.0
+offset_right = 535.0
+offset_bottom = 1227.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 503.0
+offset_top = 1500.0
+offset_right = 535.0
+offset_bottom = 2954.0
+scale = Vector2(1, 1.52)
+color = Color(0, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="." groups=["scorezone"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(517.5, 1361)
+shape = SubResource("RectangleShape2D_udoyy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fs5rh")
+}
+autoplay = "scrolldown"
+
+[node name="Area2D2" type="Area2D" parent="." groups=["deathzone"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(518.5, 496)
+shape = SubResource("RectangleShape2D_m8oq8")
+
+[node name="Area2D3" type="Area2D" parent="." groups=["deathzone"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(518.5, 2607)
+shape = SubResource("RectangleShape2D_mvx13")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

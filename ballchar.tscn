@@ -1,35 +1,72 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5rcvg6qdsfl3"]
+[gd_scene load_steps=6 format=3 uid="uid://b5rcvg6qdsfl3"]
 
 [ext_resource type="Texture2D" uid="uid://d0n8wy7aw0u7u" path="res://ballman.png" id="1_n235j"]
 
 [sub_resource type="GDScript" id="GDScript_y53pe"]
 script/source = "extends CharacterBody2D
 
-const SPEED = 500.0
+const SPEED = 700.0
 const JUMP_VELOCITY = -400.0
-const GRAVITY_SCALE = 1.5
+const GRAVITY_SCALE = 3.0  # Increased Gravity Scale
 const MAX_SPEED = 750.0
+const COOLDOWN_TIME = 0.1  # Cooldown time to prevent rapid toggling
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
 var gravity_direction = Vector2(1, 0)  # Initial gravity direction (to the right)
+var last_input_time = -COOLDOWN_TIME
 
 func _physics_process(delta):
-	# Add the gravity.
+	# Add the gravity
 	if not is_on_floor():
 		velocity += gravity_direction * gravity * delta
 
-	# Apply the maximum speed limit.
+	# Apply the maximum speed limit
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
 
-	
+	print(\"Velocity: \", velocity)  # Debugging print statement
+
 	move_and_slide()
 
 func _input(event):
 	if event is InputEventScreenTouch and event.is_pressed():
-		# Toggle gravity direction between right and left
-		gravity_direction = -gravity_direction * GRAVITY_SCALE
+		var current_time = Time.get_ticks_msec() / 1000.0
+		if current_time - last_input_time > COOLDOWN_TIME:
+			# Toggle gravity direction between right and left
+			if gravity_direction == Vector2(1, 0):
+				gravity_direction = Vector2(-1, 0)
+			else:
+				gravity_direction = Vector2(1, 0)
+			last_input_time = current_time
+
+			# Apply an immediate velocity change for faster response
+			velocity.x = gravity_direction.x * SPEED
+
+			print(\"Gravity Direction: \", gravity_direction)  # Debugging print statement
+"
+
+[sub_resource type="GDScript" id="GDScript_xyrnm"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+	
+func _on_area_entered(area):
+	
+	if area.is_in_group(\"scorezone\"):
+		Global.score += 1
+		print(Global.score)
+	
+	if area.is_in_group(\"deathzone\"):
+		get_tree().reload_current_scene()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qnujt"]
@@ -44,9 +81,12 @@ script = SubResource("GDScript_y53pe")
 texture = ExtResource("1_n235j")
 
 [node name="Area2D" type="Area2D" parent="."]
+script = SubResource("GDScript_xyrnm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_qnujt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v02ab")
+
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
