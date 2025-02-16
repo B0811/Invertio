@@ -1,4 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dv88pcpscquly"]
+[gd_scene load_steps=10 format=3 uid="uid://dv88pcpscquly"]
+
+[ext_resource type="Script" path="res://Area2D.gd" id="1_htdfn"]
+[ext_resource type="Script" path="res://Area2D2.gd" id="2_bk6vn"]
 
 [sub_resource type="GDScript" id="GDScript_7pnot"]
 script/source = "extends Node2D
@@ -7,6 +10,15 @@ script/source = "extends Node2D
 
 func _on_animation_player_animation_finished(anim_name):
 	queue_free()
+
+
+
+func _on_area_2d_2_area_entered(area):
+	pass # Replace with function body.
+
+
+func _on_area_2d_3_area_entered(area):
+	pass # Replace with function body.
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_udoyy"]
@@ -29,7 +41,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_vshvm"]
 resource_name = "scrolldown"
-length = 5.0
+length = 8.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -37,10 +49,10 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
+"times": PackedFloat32Array(0, 8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-17, -3936), Vector2(-17, 2200)]
+"values": [Vector2(50, -3936), Vector2(50, 4000)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fs5rh"]
@@ -75,6 +87,7 @@ scale = Vector2(1, 1.52)
 color = Color(0, 0, 0, 1)
 
 [node name="Area2D" type="Area2D" parent="." groups=["scorezone"]]
+script = ExtResource("1_htdfn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(517.5, 1361)
@@ -87,15 +100,18 @@ libraries = {
 autoplay = "scrolldown"
 
 [node name="Area2D2" type="Area2D" parent="." groups=["deathzone"]]
+script = ExtResource("2_bk6vn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" groups=["deathzone"]]
 position = Vector2(518.5, 496)
 shape = SubResource("RectangleShape2D_m8oq8")
 
 [node name="Area2D3" type="Area2D" parent="." groups=["deathzone"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3" groups=["deathzone"]]
 position = Vector2(518.5, 2607)
 shape = SubResource("RectangleShape2D_mvx13")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
+[connection signal="area_entered" from="Area2D3" to="." method="_on_area_2d_3_area_entered"]
