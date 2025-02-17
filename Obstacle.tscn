@@ -1,7 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dv88pcpscquly"]
-
-[ext_resource type="Script" path="res://Area2D.gd" id="1_htdfn"]
-[ext_resource type="Script" path="res://Area2D2.gd" id="2_bk6vn"]
+[gd_scene load_steps=8 format=3 uid="uid://dv88pcpscquly"]
 
 [sub_resource type="GDScript" id="GDScript_7pnot"]
 script/source = "extends Node2D
@@ -87,7 +84,6 @@ scale = Vector2(1, 1.52)
 color = Color(0, 0, 0, 1)
 
 [node name="Area2D" type="Area2D" parent="." groups=["scorezone"]]
-script = ExtResource("1_htdfn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(517.5, 1361)
@@ -100,7 +96,6 @@ libraries = {
 autoplay = "scrolldown"
 
 [node name="Area2D2" type="Area2D" parent="." groups=["deathzone"]]
-script = ExtResource("2_bk6vn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" groups=["deathzone"]]
 position = Vector2(518.5, 496)

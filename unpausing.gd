@@ -6,10 +6,11 @@ func _process(delta):
 	pass
 
 
-func _input(event):
-	if event is InputEventScreenTouch and event.is_pressed():
-		
-		get_tree().paused = false
-		label_2.visible = false
-		set_process_input(false)
+
 	
+
+
+func _on_button_for_unpause_button_down():
+	get_tree().paused = false
+	label_2.visible = false
+	set_process_input(false)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5rcvg6qdsfl3"]
+[gd_scene load_steps=9 format=3 uid="uid://b5rcvg6qdsfl3"]
 
 [ext_resource type="Texture2D" uid="uid://dp63a562bt1go" path="res://whitecircle.png" id="1_m3yuw"]
+[ext_resource type="Script" path="res://ballcolorconrollernode.gd" id="1_tuf2o"]
 
 [sub_resource type="GDScript" id="GDScript_y53pe"]
 script/source = "extends CharacterBody2D
@@ -24,25 +25,12 @@ func _physics_process(delta):
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
 
-	print(\"Velocity: \", velocity)  # Debugging print statement
+
+	
 
 	move_and_slide()
 
-func _input(event):
-	if event is InputEventScreenTouch and event.is_pressed():
-		var current_time = Time.get_ticks_msec() / 1000.0
-		if current_time - last_input_time > COOLDOWN_TIME:
-			# Toggle gravity direction between right and left
-			if gravity_direction == Vector2(1, 0):
-				gravity_direction = Vector2(-1, 0)
-			else:
-				gravity_direction = Vector2(1, 0)
-			last_input_time = current_time
 
-			# Apply an immediate velocity change for faster response
-			velocity.x = gravity_direction.x * SPEED
-
-			print(\"Gravity Direction: \", gravity_direction)  # Debugging print statement
 
 
 func _on_area_2d_area_entered(area):
@@ -60,6 +48,26 @@ func _on_area_2d_area_entered(area):
 		visible = false
 		global_position = Vector2(178, 2110)
 
+
+
+
+
+
+func _on_button_button_down():
+		var current_time = Time.get_ticks_msec() / 1000.0
+		if current_time - last_input_time > COOLDOWN_TIME:
+			# Toggle gravity direction between right and left
+			if gravity_direction == Vector2(1, 0):
+				gravity_direction = Vector2(-1, 0)
+			else:
+				gravity_direction = Vector2(1, 0)
+			last_input_time = current_time
+
+			# Apply an immediate velocity change for faster response
+			velocity.x = gravity_direction.x * SPEED
+
+			print(\"Gravity Direction: \", gravity_direction)  # Debugging print statement.	pass # Replace with function body.
+			
 "
 
 [sub_resource type="GDScript" id="GDScript_xyrnm"]
@@ -81,10 +89,19 @@ func _process(delta):
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v02ab"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jaisa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rfue3"]
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
+z_index = 3
 position = Vector2(190, 1457)
 scale = Vector2(3, 3)
 script = SubResource("GDScript_y53pe")
+
+[node name="Node2D" type="Node2D" parent="."]
+process_mode = 2
+script = ExtResource("1_tuf2o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 1)
@@ -100,4 +117,15 @@ shape = SubResource("CircleShape2D_qnujt")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v02ab")
 
+[node name="Button" type="Button" parent="."]
+offset_left = -874.333
+offset_top = -462.0
+offset_right = 1204.67
+offset_bottom = 600.0
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jaisa")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rfue3")
+flat = true
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

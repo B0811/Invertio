@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq0khxw35a1y0"]
+
+[ext_resource type="Script" path="res://MENUTEST.gd" id="1_g4hgr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sb1y3"]
+font_size = 135
+
+[node name="Node2D" type="Node2D"]
+process_mode = 3
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 242.0
+offset_right = 55.0
+offset_bottom = 282.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.2
+anchor_top = -0.1
+anchor_right = -0.2
+anchor_bottom = -0.1
+offset_left = -161.0
+offset_top = 522.0
+offset_right = 1350.0
+offset_bottom = 1335.0
+color = Color(0, 0, 0, 0.4)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 542.0
+offset_right = 977.0
+offset_bottom = 901.0
+text = "Menu"
+label_settings = SubResource("LabelSettings_sb1y3")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ChangeBallColorButton" type="Button" parent="."]
+z_index = 10
+offset_left = 367.0
+offset_top = 1103.0
+offset_right = 785.0
+offset_bottom = 1239.0
+theme_override_font_sizes/font_size = 37
+text = "Change Ball Color"
+script = ExtResource("1_g4hgr")
+
+[connection signal="pressed" from="ChangeBallColorButton" to="ChangeBallColorButton" method="_on_pressed"]

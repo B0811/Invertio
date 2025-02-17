@@ -1,0 +1,5 @@
+extends Button
+
+
+func _on_pressed():
+	Global.setballcolor = Color(0, 1, 0)
