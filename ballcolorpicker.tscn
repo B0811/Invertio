@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cgaqc07rksfx3"]
+[gd_scene load_steps=23 format=3 uid="uid://bxquhs3o7nsx0"]
 
 [ext_resource type="Texture2D" uid="uid://dp63a562bt1go" path="res://whitecircle.png" id="1_5mm3t"]
 [ext_resource type="Script" path="res://backbutton.gd" id="2_ca3al"]
@@ -29,6 +29,21 @@ font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vg7ht"]
 
+[sub_resource type="Animation" id="Animation_g2xfd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(755, 2800)]
+}
+
 [sub_resource type="Animation" id="Animation_r3u3k"]
 resource_name = "bobbing"
 length = 0.7
@@ -46,21 +61,6 @@ tracks/0/keys = {
 "values": [Vector2(755, 2800), Vector2(755, 2780)]
 }
 
-[sub_resource type="Animation" id="Animation_g2xfd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(755, 2800)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r6v0c"]
 _data = {
 "RESET": SubResource("Animation_g2xfd"),
@@ -73,9 +73,9 @@ position = Vector2(-170, -870)
 
 [node name="Label" type="Label" parent="."]
 z_index = 1
-offset_left = 338.0
+offset_left = 172.0
 offset_top = 1252.0
-offset_right = 1181.0
+offset_right = 1337.0
 offset_bottom = 1638.0
 text = "Choose a Ball Color"
 label_settings = SubResource("LabelSettings_f573e")
@@ -83,16 +83,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -565.0
-offset_top = 595.0
-offset_right = 1958.0
-offset_bottom = 3598.0
+offset_left = -531.0
+offset_top = 626.0
+offset_right = 1992.0
+offset_bottom = 3629.0
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_left = 338.0
+offset_left = 334.0
 offset_top = 1743.0
-offset_right = 619.0
-offset_bottom = 1985.0
+offset_right = 615.0
+offset_bottom = 1951.0
 scale = Vector2(3, 3)
 theme_override_constants/h_separation = 27
 theme_override_constants/v_separation = 29
@@ -218,8 +218,8 @@ autoplay = "bobbing"
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 self_modulate = Color(0.458824, 0.458824, 0.458824, 1)
-position = Vector2(761.5, 2801)
-scale = Vector2(52.0625, 50.25)
+position = Vector2(755, 2788)
+scale = Vector2(48.25, 48.25)
 texture = ExtResource("4_ay323")
 
 [connection signal="pressed" from="GridContainer/BlackBall" to="GridContainer/BlackBall" method="_on_pressed"]
