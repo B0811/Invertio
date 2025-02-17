@@ -2,7 +2,7 @@ extends Node
 
 var score = 0
 
-var setballcolor: Color = Color(1.0, 0.5, 0.0)
+var setballcolor: Color = Color(0, 0, 0)
 
 var ui_up = false
 
